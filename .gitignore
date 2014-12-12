@@ -38,3 +38,7 @@ autom4te.cache/
 
 # Build artifacts
 src/generate-headers
+
+# Temporary editor files
+*.swp
+*~
