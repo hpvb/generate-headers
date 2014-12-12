@@ -28,7 +28,9 @@ void version() {
 	     "Copyright (C) 2014 Hein-Pieter van Braam\n"
 	     "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.\n"
 	     "This is free software: you are free to change and redistribute it.\n"
-	     "There is NO WARRANTY, to the extent permitted by law.\n", PACKAGE,
+	     "There is NO WARRANTY, to the extent permitted by law.\n"
+	     "\n"
+	     "Written by Hein-Pieter van Braam <hp@tmm.cx>\n", PACKAGE,
 	     PACKAGE_VERSION);
 	exit(0);
 }
@@ -39,15 +41,17 @@ void usage(const char *progname) {
 	     "Generate a table of symbolic names for syscall numbers from INFILE.\n"
 	     "The table in the generated header is named NAME.\n"
 	     "\n"
+	     "Options:\n"
 	     "  -o, --output OUTFILE  Write output to this file.\n"
 	     "  -t, --table NAME      Name the table NAME in the generated header.\n"
 	     "  -a, --append          Append to OUTFILE.\n"
 	     "  -h, --help            Print this help screen.\n"
-	     "    , --version         Output version information and exit\n"
+	     "      --version         Output version information and exit\n"
 	     "\n"
 	     "With no INFILE, or when INFILE is -, read standard input.\n"
 	     "With no OUTFILE, or when OUTFILE is -, write to standard output.\n"
-	     "With no NAME, name the table 'syscall_list'.\n", progname);
+	     "With no NAME, name the table 'syscall_list'.\n"
+	     "\n" "Report bugs to <hp@tmm.cx>.\n", progname);
 	exit(0);
 }
 
@@ -119,12 +123,12 @@ int main(int argc, char *argv[]) {
 			exit(1);
 			break;
 		}
-	} 
+	}
 
-        if (optind < argc) {
+	if (optind < argc) {
 		input = argv[optind];
 		open_file(&in_fp, input, "rb");
-        } else {
+	} else {
 		input = strdup("-");
 	}
 
@@ -149,7 +153,8 @@ int main(int argc, char *argv[]) {
 		}
 
 		if (first_line) {
-			write_file(output, out_fp, "const char *%s[] = {\n", table);
+			write_file(output, out_fp, "const char *%s[] = {\n",
+				   table);
 			first_line = 0;
 		}
 
