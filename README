@@ -35,6 +35,17 @@ With no header-file, or when header-file is -, read standard input.
 With no output-file, or when output-file is -, write to standard output.
 With no name, name the table 'syscall_list'.  
 
+EXAMPLES
+--------
+# generate-headers /usr/include/asm/unistd_64.h
+       Generate a table for 64bit syscalls and write to stdout
+
+# generate-headers /usr/include/asm/unistd_32.h -o syscalls.h -t linux_syscalls.h
+       Generate a table of 32bit syscalls and write them to "linux_syscalls.h"
+
+# generate-headers /usr/include/asm/unistd_64.h -o syscalls.h -t linux_syscalls.h -a
+       Generate a table of 64bit syscalls and append them to "linux_syscalls.h"
+
 COPYRIGHT
 ---------
 Copyright (c) 2014 Hein-Pieter van Braam

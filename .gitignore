@@ -37,4 +37,4 @@ autom4te.cache/
 *gmon.out
 
 # Build artifacts
-src/gen_header
+src/generate-headers

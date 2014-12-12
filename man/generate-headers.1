@@ -54,6 +54,16 @@ is -, write to standard output.
 With no
 .I name
 , name the table 'syscall_list'.
+.SH EXAMPLES
+.TP
+generate-headers /usr/include/asm/unistd_64.h
+Generate a table for 64bit syscalls and write to stdout
+.TP
+generate-headers /usr/include/asm/unistd_32.h -o syscalls.h -t linux_syscalls.h
+Generate a table of 32bit syscalls and write them to "linux_syscalls.h"
+.TP
+generate-headers /usr/include/asm/unistd_64.h -o syscalls.h -t linux_syscalls.h -a
+Generate a table of 64bit syscalls and append them to "linux_syscalls.h"
 .SH COPYRIGHT
 Copyright \(co 2014 Hein\-Pieter van Braam
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.

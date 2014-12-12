@@ -40,7 +40,7 @@ void usage(const char *progname) {
 	     "The table in the generated header is named NAME.\n"
 	     "\n"
 	     "  -o, --output OUTFILE  Write output to this file.\n"
-	     "  -t, --table  NAME     Name the table NAME in the generated header.\n"
+	     "  -t, --table NAME      Name the table NAME in the generated header.\n"
 	     "  -a, --append          Append to OUTFILE.\n"
 	     "  -h, --help            Print this help screen.\n"
 	     "    , --version         Output version information and exit\n"
