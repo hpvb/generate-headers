@@ -40,11 +40,11 @@ EXAMPLES
 # generate-headers /usr/include/asm/unistd_64.h
        Generate a table for 64bit syscalls and write to stdout
 
-# generate-headers /usr/include/asm/unistd_32.h -o syscalls.h -t linux_syscalls.h
-       Generate a table of 32bit syscalls and write them to "linux_syscalls.h"
+# generate-headers /usr/include/asm/unistd_32.h -o syscalls.h -t linux32_syscalls
+       Generate a table of 32bit syscalls and write them to "syscalls.h", naming the table 'linux32_syscalls'
 
-# generate-headers /usr/include/asm/unistd_64.h -o syscalls.h -t linux_syscalls.h -a
-       Generate a table of 64bit syscalls and append them to "linux_syscalls.h"
+# generate-headers /usr/include/asm/unistd_64.h -o syscalls.h -t linux64_syscalls -a
+       Generate a table of 64bit syscalls and append them to "syscalls.h", naming the table 'linux64_syscalls'
 
 COPYRIGHT
 ---------
