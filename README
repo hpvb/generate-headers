@@ -1,0 +1,48 @@
+generate-headers
+===================
+
+name
+----
+generate-headers - Generate a table of symbolic names for syscall numbers
+
+SYNOPSIS
+--------
+[--output output-file ] [--table-name name ] [--append] header-file
+
+DESCRIPTION
+-----------
+generate-headers generates a table of symbolic names for the Linux syscalls in header-file. The table can be used to create user-friendly messages in programs that use ptrace(2) such as strace(1). Other uses may include programs that create sandboxes using seccomp.
+
+OPTIONS
+-------
+
+-o, --output output-file
+    Write output to this file.
+
+-t, --table name
+    Name the table "name" in the generated header.
+
+-a, --append 
+    Append to output-file.
+
+-h, --help 
+    Print the help screen and exit.
+
+--version 
+    Output version information and exit
+
+With no header-file, or when header-file is -, read standard input.
+With no output-file, or when output-file is -, write to standard output.
+With no name, name the table 'syscall_list'.  
+
+COPYRIGHT
+---------
+Copyright (c) 2014 Hein-Pieter van Braam
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+AUTHOR
+------
+Hein-Pieter van Braam <hp@tmm.cx>

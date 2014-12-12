@@ -1,0 +1,64 @@
+.\" Process this file with
+.\" groff -man -Tascii foo.1
+.\"
+.TH GENERATE-HEADERS 1 "DECEMBER 2014" Linux "User Manuals"
+.SH name
+generate-headers \- Generate a table of symbolic names for syscall numbers
+.SH SYNOPSIS
+[--output 
+.I output-file
+] [--table-name 
+.I name
+] [--append] 
+.I header-file
+.SH DESCRIPTION
+.B generate-headers
+generates a table of symbolic names for the Linux syscalls in
+.I header-file
+\[char46] The table can be used to create user-friendly messages in programs
+that use
+.BR ptrace(2)
+such as
+.BR strace(1)
+\[char46] Other uses may include programs that create sandboxes using seccomp.
+.SH OPTIONS
+.TP
+\fB\-o\fR, \fB\-\-output\fR output-file
+Write output to this file.
+.TP
+\fB\-t\fR, \fB\-\-table\fR name
+Name the table "name" in the generated header.
+.TP
+\fB\-a\fR, \fB\-\-append\fR
+Append to output-file.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print the help screen and exit.
+.TP
+\fB\-\-version\fR
+Output version information and exit
+.PP
+.br
+With no
+.I header-file
+, or when
+.I header-file
+is -, read standard input.
+.br
+With no
+.I output-file
+, or when
+.I output-file
+is -, write to standard output.
+.br
+With no
+.I name
+, name the table 'syscall_list'.
+.SH COPYRIGHT
+Copyright \(co 2014 Hein\-Pieter van Braam
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH AUTHOR
+Hein-Pieter van Braam <hp@tmm.cx>

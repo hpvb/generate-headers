@@ -1,0 +1,40 @@
+# Autotools generated
+aclocal.m4
+ar-lib
+compile
+config.guess
+config.h
+config.h.in
+config.log
+config.status
+config.sub
+configure
+depcomp
+install-sh
+libtool
+ltmain.sh
+missing
+stamp-h1
+m4/libtool.m4
+m4/lt~obsolete.m4
+m4/ltoptions.m4
+m4/ltsugar.m4
+m4/ltversion.m4
+autom4te.cache/
+
+# Build system generated
+*.deps
+*.libs
+*.dirstamp
+*Makefile
+*Makefile.in
+*.o
+*.lo
+*.la
+*.a
+
+# Profiling tools
+*gmon.out
+
+# Build artifacts
+src/gen_header
