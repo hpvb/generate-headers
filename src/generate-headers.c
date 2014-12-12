@@ -61,8 +61,7 @@ void open_file(FILE ** outfp, const char *filename, const char *mode) {
 	if (strlen(filename) == 1 && filename[0] == '-')
 		return;
 
-	fp = fopen(filename, mode);
-	if (!fp)
+	if (!(fp = fopen(filename, mode)))
 		error(1, errno, "cannot access %s", filename);
 
 	*outfp = fp;
@@ -158,18 +157,19 @@ int main(int argc, char *argv[]) {
 			first_line = 0;
 		}
 
-		if (number - prev_number > 1) {
-			for (; prev_number < number - 1; ++prev_number) {
+		if (number - prev_number > 1)
+			for (; prev_number < number - 1; ++prev_number)
 				write_file(output, out_fp, "\tNULL,\n");
-			}
-		}
 
 		write_file(output, out_fp, "\t\"%s\",\n", syscall);
 		prev_number = number;
 		free(syscall);
 	}
 
-	write_file(output, out_fp, "};\n");
+	if (first_line)
+		error(1, 0, "No matching lines found in %s", input);
+	else
+		write_file(output, out_fp, "};\n");
 
 	free(table);
 	free(output);
