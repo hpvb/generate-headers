@@ -64,6 +64,8 @@ Generate a table of 32bit syscalls and write them to "syscalls.h", naming the ta
 .TP
 generate-headers /usr/include/asm/unistd_64.h -o syscalls.h -t linux64_syscalls -a
 Generate a table of 64bit syscalls and append them to "syscalls.h", naming the table 'linux64_syscalls'
+.SH BUGS
+Currently generate-headers assumes the definitions are in numerical order. This may not always be true.
 .SH COPYRIGHT
 Copyright \(co 2014 Hein\-Pieter van Braam
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
