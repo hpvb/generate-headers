@@ -1,11 +1,10 @@
 #!/bin/bash
-set -x
 testdata="#define __NR_restart_syscall 0"
 
-stdout="$(echo ${testdata} | ${program} - -o -)"
+stdout="$(echo ${testdata} | ${program} -t test_table)"
 retval=$?
 
-md5sum="dae7b01a3001d62d45f994acda46cda8"
+md5sum="0f727e5979e416ce0d7f79d78f4edbcf"
 out_md5sum="$(echo -e "$stdout" | md5sum | cut -d ' ' -f 1)"
 
 echo 1..2

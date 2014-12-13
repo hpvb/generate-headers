@@ -18,4 +18,5 @@ TESTS = $(testdir)/invalid-input.test                \
         $(testdir)/allow-dash.test                   \
         $(testdir)/directory-input.test              \
         $(testdir)/directory-output.test             \
-        $(testdir)/append.test
+        $(testdir)/append.test                       \
+        $(testdir)/table-name.test
