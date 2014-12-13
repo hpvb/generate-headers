@@ -1,7 +1,7 @@
 #!/bin/bash
 testdata="#define __NR_restart_syscall 0"
 
-stdout=$(echo ${testdata} | ${program} -)
+stdout=$(echo ${testdata} | ${program} - -o -)
 retval=$?
 
 md5sum="9b7f54c3b5786dce202bd5b5766fccb0"

@@ -1,0 +1,26 @@
+#!/bin/bash
+testdata="invalid data"
+
+stdout=$(${program} ${testdir}/unistd_32.h -o ${testdir})
+retval=$?
+
+echo 1..3
+if [ $retval -eq 1 ]; then
+	echo "ok - Exits with errorcode"
+else
+	echo "not ok - Exist 0"
+fi
+
+if [ -z "${stdout}" ]; then
+	echo "ok - Does not output data with invalid input"
+else
+	echo "not ok - Outputs data with invalid input"
+fi
+
+stderr=$(${program} ${testdir}/unistd_32.h -o ${testdir} 2>&1)
+
+if echo ${stderr} | grep -q "Is a directory"; then
+	echo "ok - Outputs an error message"
+else
+	echo "not ok - Does not output an error message"
+fi

@@ -1,0 +1,41 @@
+#!/bin/bash
+tmpfile=$(tempfile -d ${testdir} -p app)
+#trap "rm -f -- '$tmpfile'" EXIT
+
+stdout=$(${program} ${testdir}/unistd_32.h -o ${tmpfile})
+retval=$?
+
+md5sum="675c669470c7157ceb36218b76773d3c"
+out_md5sum="$(md5sum ${tmpfile} | cut -d ' ' -f 1)"
+
+echo 1..4
+if [ $retval -eq 0 ]; then
+        echo "ok - Exists successfully"
+else
+        echo "not ok - Exist with errorcode"
+fi
+
+if [ "$md5sum" == "$out_md5sum" ]; then
+	echo "ok - Output matches expected output"
+else
+	echo "not ok - Output does not match expected output"
+fi
+
+stdout=$(${program} ${testdir}/unistd_32.h -o ${tmpfile} -a)
+retval=$?
+
+md5sum="a40adff22582687f1fb2bf6b4fac3515"
+out_md5sum="$(md5sum ${tmpfile} | cut -d ' ' -f 1)"
+
+if [ $retval -eq 0 ]; then
+        echo "ok - Exists successfully"
+else
+        echo "not ok - Exist with errorcode"
+fi
+
+if [ "$md5sum" == "$out_md5sum" ]; then
+	echo "ok - Output matches expected output"
+else
+	echo "not ok - Output does not match expected output"
+fi
+
