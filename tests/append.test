@@ -1,6 +1,6 @@
 #!/bin/bash
 tmpfile=$(tempfile -d ${testdir} -p app)
-#trap "rm -f -- '$tmpfile'" EXIT
+trap "rm -f -- '$tmpfile'" EXIT
 
 stdout=$(${program} ${testdir}/unistd_32.h -o ${tmpfile})
 retval=$?

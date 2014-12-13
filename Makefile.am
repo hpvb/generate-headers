@@ -14,6 +14,7 @@ TESTS_ENVIRONMENT = program=$(generate_headers)      \
                     testdir=$(top_srcdir)/$(testdir)
 TESTS = $(testdir)/invalid-input.test                \
         $(testdir)/unistd_32.test                    \
+        $(testdir)/unistd_32_unordered.test          \
         $(testdir)/allow-dash.test                   \
         $(testdir)/directory-input.test              \
         $(testdir)/directory-output.test             \

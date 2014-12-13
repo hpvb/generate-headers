@@ -48,7 +48,7 @@ EXAMPLES
 
 BUGS
 ----
-Currently generate-headers assumes the definitions are in numerical order. This may not always be true.
+If a double symbol is encountered in the input the program will leak the memory of the earlier encountered value(s).
 
 COPYRIGHT
 ---------

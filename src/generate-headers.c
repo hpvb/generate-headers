@@ -22,6 +22,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdarg.h>
 #include <error.h>
 
+typedef struct {
+	int size;
+	int last_symbol;
+	int num_symbols;
+	char **symbols;
+} symbol_table_t;
+
 void version() {
 	printf
 	    ("%s %s\n"
@@ -77,11 +84,37 @@ void write_file(const char *filename, FILE * fp, const char *fmt, ...) {
 	va_end(args);
 }
 
+void symbol_table_insert(symbol_table_t * symbol_table, int num, char *sym) {
+	int i;
+
+	while (num >= symbol_table->size) {
+		symbol_table->symbols =
+		    realloc(symbol_table->symbols,
+			    (symbol_table->size * 2) * sizeof(const char *));
+		for (i = symbol_table->size; i < symbol_table->size * 2; ++i) {
+			symbol_table->symbols[i] = NULL;
+		}
+		symbol_table->size *= 2;
+	}
+
+	if (num > symbol_table->last_symbol)
+		symbol_table->last_symbol = num;
+
+	++symbol_table->num_symbols;
+	symbol_table->symbols[num] = sym;
+}
+
 int main(int argc, char *argv[]) {
 	char *table = NULL;
 	char *syscall, *output = NULL, *input = NULL;
-	int syscall_nr = 0, prev_syscall_nr = -1, c, append = 0, first_line = 1;
+	int syscall_nr = 0, c, append = 0;
 	FILE *in_fp = stdin, *out_fp = stdout;
+	symbol_table_t symbol_table;
+
+	symbol_table.size = 100;
+	symbol_table.last_symbol = 0;
+	symbol_table.num_symbols = 0;
+	symbol_table.symbols = calloc(symbol_table.size, sizeof(const char *));
 
 	while (1) {
 		int option_index = 0;
@@ -152,27 +185,25 @@ int main(int argc, char *argv[]) {
 			continue;
 		}
 
-		if (first_line) {
-			write_file(output, out_fp, "const char *%s[] = {\n",
-				   table);
-			first_line = 0;
-		}
-
-		if (syscall_nr - prev_syscall_nr > 1)
-			for (; prev_syscall_nr < syscall_nr - 1;
-			     ++prev_syscall_nr)
-				write_file(output, out_fp, "\tNULL,\n");
-
-		write_file(output, out_fp, "\t\"%s\",\n", syscall);
-		prev_syscall_nr = syscall_nr;
-		free(syscall);
+		symbol_table_insert(&symbol_table, syscall_nr, syscall);
 	}
 
-	if (first_line)
+	if (!symbol_table.num_symbols)
 		error(1, 0, "No matching lines found in %s", input);
-	else
-		write_file(output, out_fp, "};\n");
 
+	write_file(output, out_fp, "const char *%s[] = {\n", table);
+	for (c = 0; c <= symbol_table.last_symbol; ++c) {
+		if (symbol_table.symbols[c]) {
+			write_file(output, out_fp, "\t\"%s\",\n",
+				   symbol_table.symbols[c]);
+			free(symbol_table.symbols[c]);
+		} else {
+			write_file(output, out_fp, "\tNULL,\n");
+		}
+	}
+	write_file(output, out_fp, "};\n");
+
+	free(symbol_table.symbols);
 	free(table);
 	free(output);
 	fclose(in_fp);
