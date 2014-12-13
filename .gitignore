@@ -42,3 +42,9 @@ src/generate-headers
 # Temporary editor files
 *.swp
 *~
+
+# Testsuite files
+tap-driver.sh
+test-suite.log
+tests/*.log
+tests/*.trs
