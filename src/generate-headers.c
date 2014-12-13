@@ -25,13 +25,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 void version() {
 	printf
 	    ("%s %s\n"
-	     "Copyright (C) 2014 Hein-Pieter van Braam\n"
-	     "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.\n"
+	     "Copyright (C) 2014 Hein-Pieter van Braam <hp@tmm.cx>.\n"
+	     "License GPLv3+: GNU GPL version 3 or later "
+	     "<http://gnu.org/licenses/gpl.html>.\n"
 	     "This is free software: you are free to change and redistribute it.\n"
 	     "There is NO WARRANTY, to the extent permitted by law.\n"
 	     "\n"
-	     "Written by Hein-Pieter van Braam <hp@tmm.cx>\n", PACKAGE,
-	     PACKAGE_VERSION);
+	     "Written by Hein-Pieter van Braam.\n", PACKAGE, PACKAGE_VERSION);
 	exit(0);
 }
 
@@ -46,7 +46,7 @@ void usage(const char *progname) {
 	     "  -t, --table NAME      Name the table NAME in the generated header.\n"
 	     "  -a, --append          Append to OUTFILE.\n"
 	     "  -h, --help            Print this help screen.\n"
-	     "      --version         Output version information and exit\n"
+	     "      --version         Output version information and exit.\n"
 	     "\n"
 	     "With no INFILE, or when INFILE is -, read standard input.\n"
 	     "With no OUTFILE, or when OUTFILE is -, write to standard output.\n"
@@ -80,7 +80,7 @@ void write_file(const char *filename, FILE * fp, const char *fmt, ...) {
 int main(int argc, char *argv[]) {
 	char *table = NULL;
 	char *syscall, *output = NULL, *input = NULL;
-	int number = 0, prev_number = -1, c, append = 0, first_line = 1;
+	int syscall_nr = 0, prev_syscall_nr = -1, c, append = 0, first_line = 1;
 	FILE *in_fp = stdin, *out_fp = stdout;
 
 	while (1) {
@@ -117,7 +117,7 @@ int main(int argc, char *argv[]) {
 			break;
 		case '?':
 			fprintf(stderr,
-				"Try '%s --help' for more information\n",
+				"Try '%s --help' for more information.\n",
 				argv[0]);
 			exit(1);
 			break;
@@ -144,7 +144,8 @@ int main(int argc, char *argv[]) {
 		table = strdup("syscall_list");
 
 	while (!feof(in_fp)) {
-		if (fscanf(in_fp, "%*s __NR_%ms %i\n", &syscall, &number) != 2) {
+		if (fscanf
+		    (in_fp, "%*s __NR_%ms %i\n", &syscall, &syscall_nr) != 2) {
 			if (errno)
 				error(1, errno, "error reading %s", input);
 
@@ -157,12 +158,13 @@ int main(int argc, char *argv[]) {
 			first_line = 0;
 		}
 
-		if (number - prev_number > 1)
-			for (; prev_number < number - 1; ++prev_number)
+		if (syscall_nr - prev_syscall_nr > 1)
+			for (; prev_syscall_nr < syscall_nr - 1;
+			     ++prev_syscall_nr)
 				write_file(output, out_fp, "\tNULL,\n");
 
 		write_file(output, out_fp, "\t\"%s\",\n", syscall);
-		prev_number = number;
+		prev_syscall_nr = syscall_nr;
 		free(syscall);
 	}
 
