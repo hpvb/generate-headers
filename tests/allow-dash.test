@@ -1,0 +1,21 @@
+#!/bin/bash
+testdata="#define __NR_restart_syscall 0"
+
+stdout=$(echo ${testdata} | ${program} -)
+retval=$?
+
+md5sum="9b7f54c3b5786dce202bd5b5766fccb0"
+out_md5sum="$(echo $stdout | md5sum | cut -d ' ' -f 1)"
+
+echo 1..2
+if [ $retval -eq 0 ]; then
+        echo "ok - Exits successfully"
+else
+        echo "not ok - Exist with errorcode"
+fi
+
+if [ "$md5sum" == "$out_md5sum" ]; then
+        echo "ok - Output matches expected output"
+else
+        echo "not ok - Output does not match expected output"
+fi

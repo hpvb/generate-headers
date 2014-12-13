@@ -9,5 +9,8 @@ man_MANS = man/generate-headers.1
 TEST_LOG_DRIVER = env AM_TAP_AWK='$(AWK)' $(SHELL) \
                   $(top_srcdir)/tap-driver.sh
 
-TESTS_ENVIRONMENT = program=$(generate_headers)
-TESTS = tests/invalid-input.test
+testdir = tests/
+TESTS_ENVIRONMENT = program=$(generate_headers) testdir=$(testdir)
+TESTS = $(testdir)/invalid-input.test \
+        $(testdir)/unistd_32.test     \
+        $(testdir)/allow-dash.test

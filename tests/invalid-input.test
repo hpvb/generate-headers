@@ -6,21 +6,21 @@ retval=$?
 
 echo 1..3
 if [ $retval -eq 1 ]; then
-	echo "ok 1 - Exits with errorcode"
+	echo "ok - Exits with errorcode"
 else
-	echo "not ok 1 - Exist 0"
+	echo "not ok - Exist 0"
 fi
 
 if [ -z "${stdout}" ]; then
-	echo "ok 2 - Does not output data with invalid input"
+	echo "ok - Does not output data with invalid input"
 else
-	echo "not ok 2 - Outputs data with invalid input"
+	echo "not ok - Outputs data with invalid input"
 fi
 
 stderr=$(echo ${testdata} | ${program} 2>&1)
 
 if echo ${stderr} | grep -q "No matching lines found"; then
-	echo "ok 3 - Outputs an error message"
+	echo "ok - Outputs an error message"
 else
-	echo "not ok 3 - Does not output an error message"
+	echo "not ok - Does not output an error message"
 fi
